@@ -40,41 +40,26 @@ from aaa import bb
 bb()
 """
 
+# 3. 바탕화면에 만든 hello.txt를 C드라이브 (C:\) 에 복사하기
 import os
 import sys
 import shutil
 import fileinput
 from datetime import datetime
 
+src = "C:\\Users\\kimsh-dt01\\Desktop\\hello.txt"
+dst = "C:\\hello.txt"
 
-src = ".\\hello.txt" # source, 상대 경로로 설정함
-dst = "C:\\Users\\hello.txt" # destination, 절대 경로로 설정함 *이 위치로 파일 복사를 하려면 관리자 권한이 필요
-
-# 절대 경로와 상대 경로
-# 절대경로 : "C:\\Users\\hello.txt" 처럼, 폴더의 주소창에 붙여넣으면 바로 그 폴더로 이동할 수 있는 경로
-# 절대경로로 폴더에 접근하면 어떤 위치에서든 그 폴더로 갈 수 있다
-#
-# 상대경로 : 현재 폴더를 기준으로 상위/하위 폴더에 접근하는 방법
-# ./ 는 현재 폴더를 의미하며 ../는 상위 폴더를 의미한다
-# 현재 폴더 안에 있는 하위 폴더 asdf에 접근하고 싶다면 ./asdf 라고 쓰면 된다
-
-
+shutil.copyfile(src,dst)
+# ★. hello.txt 안에 작성할 내용을 Hello, world! 대신 오늘의 날짜와 시간 (코드를 실행한 시점) 이 되게 할 수 있을까요?
 nowDatetime = str(datetime.now())
 
+for line in fileinput.input("C:\\hello.txt" , inplace = True):
+    if 'Hello, World!' in line:
+        line = line.replace(line, nowDatetime)
+        
+    sys.stdout.write(line)
 
-with open(src, "w") as txt:
-    txt.write(nowDatetime)
-    
-# open으로 파일을 읽으려고 할 때는 파일이 존재해야만 한다 (존재하지 않으면 오류남)
-# 쓰려고 할 때는 파일이 존재하지 않아도 상관 없다 (존재하지 않으면 새로 하나 만들고, 존재하면 거기다가 덮어쓰거나 이어쓴다)
-
-shutil.copyfile(src,dst) # 파일 처리(이동, 복사, 삭제) 등을 수행하는 모듈
-
-print("Done!")
-
-
-"""
-이 예제의 의미와 기억하길 바라는 것들
 
 1. 바탕화면 폴더의 위치, 바탕화면 폴더에 접근하는 방법
 2. 현재 시간 모듈 사용 방법
