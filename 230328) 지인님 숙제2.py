@@ -28,7 +28,6 @@
 
 # with open(file_path , 'r') as f:
 #     files= f.read().splitlines()
-    
 # print(files)
 
 
@@ -42,12 +41,17 @@ with open(file_path , 'r') as f:
 
 no_files = []
 
-for file in files:
-    if os.path.isfile(file.strip()) == False:
-        no_files.append(file.strip())
-        num_files = len(no_files)
-print("존재하지 않는 파일은: 총", num_files ,"개 입니다.\n"  ,no_files)
+for file in files: # files는 위(40번 라인)에서 만든 리스트의 이름이므로 그대로 사용, file은 리스트의 요소를 하나씩 받아오는 변수이므로 다른 이름을 써도 된다
+    if os.path.isfile(file.strip()) == False: # isdir은 폴더를 찾는 함수, isfile은 파일을 찾는 함수,  strip은 문자열의 양쪽 공백을 제거하는 함수 
+        no_files.append(file.strip()) # no_files 리스트에 존재하지 않는 파일명을 추가
 
-f = open("D:\\read_write\\none_exist.txt", 'w')
-f.write(str(no_files))
-f.close()
+num_files = len(no_files)
+none_exist_path = "D:\\read_write\\none_exist.txt"
+
+with open(none_exist_path, 'w') as f:
+    content = "\n".join(no_files) # "\n"을 이용해서 리스트를 연결, 문자열로 변환 / .join()은 리스트를 문자열로 변환, .append()는 리스트에 요소를 추가하는 함수
+    f.write(content) 
+    
+    #print("존재하지 않는 파일은: 총", num_files ,"개 입니다.\n",content) # sep의 공백을 활용한 버전
+    print(f"존재하지 않는 파일은 : 총 {num_files} 개 입니다.\n{content}") # f-string 버전
+    
