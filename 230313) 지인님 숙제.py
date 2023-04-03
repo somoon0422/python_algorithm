@@ -60,7 +60,7 @@ for line in fileinput.input("C:\\hello.txt" , inplace = True):
         
     sys.stdout.write(line)
 
-
+"""
 1. 바탕화면 폴더의 위치, 바탕화면 폴더에 접근하는 방법
 2. 현재 시간 모듈 사용 방법
 3. 파이썬 모듈을 불러올 때 import와 from의 차이
