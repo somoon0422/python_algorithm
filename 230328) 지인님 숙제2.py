@@ -41,10 +41,13 @@ with open(file_path , 'r') as f:
 # print(files)
 
 no_files = []
+
 for file in files:
     if os.path.isfile(file.strip()) == False:
         no_files.append(file.strip())
-print(no_files)
+        num_files = len(no_files)
+print("존재하지 않는 파일은: 총", num_files ,"개 입니다.\n"  ,no_files)
 
 f = open("D:\\read_write\\none_exist.txt", 'w')
 f.write(str(no_files))
+f.close()
