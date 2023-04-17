@@ -2,11 +2,15 @@
 
 import os
 
-file_path = 'C:/Users/kimsh-dt01/Downloads/PlateCut/New_Plate'
+file_path = 'C:\\Users\\kimsh-dt01\\Downloads\\PlateCut\\Special_Plate'
+file_list =[]
+filextention = ('.bmp')
 
-file_name_list = []
-
-for file in file_path:
-    files = os.walk(file)
-    file_name_list.append(files)
-print(file_name_list)
+for root, dirs, files in os.walk(file_path):
+    for file in files:
+        if file.endswith(filextention):
+            file_list.append(file)
+            
+for file in file_list:
+    if file.endswith(filextention):
+        print(os.path.splitext(file)[0].split('_')[0])
