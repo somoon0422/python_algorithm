@@ -37,13 +37,16 @@ def read_files(path, exts):
                 file = os.path.abspath(file) 
                 file = file.replace(os.sep, "/")
                 files.append(file)
-                
-            
     return files
 
 
-def read_folders():
-    pass
+def read_folders(dirs, exts):
+    files = []
+    
+    for r, d, f in os.walk(dirs):
+        for file in d :
+            files.append(file)
+    return files
 
 
 
@@ -52,14 +55,18 @@ exts=(".jpg", ".jpeg", ".bmp", ".png", ".JPG", ".JPEG", ".PNG", ".BMP")
 
 parser = argparse.ArgumentParser(description='파일 경로를 입력하세요.')
 parser.add_argument('-p','--path', type=str , help= '파일 경로를 입력하세요.')
+parser.add_argument('-d', '--dirs', type=str, help='폴더 경로를 입력하세요.')
 args = parser.parse_args()
 
 
-files_list = read_files(args.path, exts)
+# files_list = read_files(args.path, exts)
+# files_text = "\n".join(files_list)
+# print(files_text)
 
+folders_list = read_folders(args.dirs, exts)
+folders_text = "\n".join(folders_list)
+print(folders_text)
 
-files_text = "\n".join(files_list)
-print(files_text)
 
 
 
