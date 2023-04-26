@@ -50,7 +50,7 @@ none_exist_path = "D:\\read_write\\none_exist.txt"
 
 with open(none_exist_path, 'w') as f:
     content = "\n".join(no_files) # "\n"을 이용해서 리스트를 연결, 문자열로 변환 / .join()은 리스트를 문자열로 변환, .append()는 리스트에 요소를 추가하는 함수
-    f.write(content) 
+    f.write(content)
     
     #print("존재하지 않는 파일은: 총", num_files ,"개 입니다.\n",content) # sep의 공백을 활용한 버전
     print(f"존재하지 않는 파일은 : 총 {num_files} 개 입니다.\n{content}") # f-string 버전
