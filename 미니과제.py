@@ -6,6 +6,8 @@
 # 과제 2 - 특정 라벨 일괄 수정하기
 # 1. 기준에서 벗어나 있지 않은 파일들 중에서 label 값이 99인 경우를 모두 38로 수정하기
 # 원래는 99번을 38로 수정하지는 않지만, 확인하기 쉽도록 이번에는 99번을 38번으로 수정하도록 하겠습니다.
+
+
 import os
 
 file_path = 'C:\\Users\\kimsh-dt01\\Downloads\\modify_txtfile'
@@ -34,11 +36,13 @@ for files in file_list:
             label, cx, cy, w, h = line.split() # 리스트에 들어 있는 5개 항목을 순서대로 변수에 할당 (언패킹)
             #print(label)
             if int(label) > 38 and int(label) != 99:
+                error_list.append(line)
                 with open('error.txt', 'w') as f:
-                    f.write(line)
-                    error_list.append(line)
-                    
+                    for i in error_list:
+                        f.write(i)
+                    print(i)    
 
-print(error_list)
+#-------------------------------------------------------------------------------------------------
 
-#미해결
+#과제2
+
