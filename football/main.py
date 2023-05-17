@@ -24,11 +24,10 @@ def reservation(court_num):
     time.sleep(1)
 
     # 로그인 처리
-    username = driver.find_element(By.NAME, 'id')
-    password = driver.find_element(By.NAME,'pwd')
-    username.send_keys('somoon0422')
-    password.send_keys('gooddata001!@#')
-    password.send_keys(Keys.ENTER)
+    driver.find_element(By.ID, "id").send_keys("somoon0422")
+    driver.find_element(By.ID, "pwd").send_keys("gooddata001!@#")
+    click_button = driver.find_element(By.XPATH, '/html/body/div/div/div/section/div/div[2]/div[1]/div[2]/button')
+    click_button.click()
     
     time.sleep(2)
 
