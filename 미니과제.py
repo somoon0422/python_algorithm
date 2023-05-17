@@ -27,22 +27,40 @@ def read_files(path, exts):
 file_list = read_files(file_path, ('.txt'))
 
 error_list = []
-for files in file_list:
-    with open(files, 'r') as f:
+change_list = []
+for file in file_list:
+    with open(file, 'r') as f:
         lines = f.readlines() #readlines 는 enter를 기준으로 한 줄을 하나의 항목으로 리스트화 함 
         for line in lines:
+            line = line.strip() #strip 은 인자를 넣지 않고 사용하면 양쪽 공백을 제거해줌
             # line = line.split()#split 은 인자를 넣지 않고 사용하면 모든 공백(스페이스 여러 칸, \n 등) 을 잘라줌  / (" ") 로 하면 지정한 그대로 스페이스 한 칸을 기준으로 잘라줌
             # print(line[0])
             label, cx, cy, w, h = line.split() # 리스트에 들어 있는 5개 항목을 순서대로 변수에 할당 (언패킹)
             #print(label)
             if int(label) > 38 and int(label) != 99:
-                error_list.append(line)
-                with open('error.txt', 'w') as f:
-                    for i in error_list:
-                        f.write(i)
-                    print(i)    
+                error_list.append(file)
+            else:
+                change_list.append(file)
+
+   
+with open('error.txt', 'w') as f:
+    error_str = '\n'.join(error_list)
+    f.write(error_str)
+    
+    
 
 #-------------------------------------------------------------------------------------------------
 
-#과제2
+#과제2 :특정라벨 일괄 수정하기
 
+
+
+
+# 1. error_list 에 없는 파일들을 list 로 만들기
+# 2. change_list 에 있는 것들을 순회를 해야함. 파일을 돌면서 각 파일을 열어 line 을 순회해야 한다.
+# 3. line을 검사하면서 조건에 맞는 레이블들을 변경해야 한다.
+#    1. line 을 split() 해서 각각의 변수에 할당한다.
+#    2. label 이 99 인 경우 label 변수를 38로 변경한다.
+#    3. join을 사용해서 label, cx, cy, w, h 를 하나의 line(문자열)로 만든다.
+# 4. 변경된 line이든 변경되지 않은 line이든 리스트에 추가한다.
+# 5. 리스트 -> 문자열 -> 파일로 저장.
