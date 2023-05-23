@@ -4,20 +4,18 @@ from selenium import webdriver # 웹드라이버를 사용하기 위한 라이�
 from time import sleep # sleep을 사용하기 위한 라이브러리
 from selenium.webdriver.common.by import By # 웹드라이버에서 By를 사용하기 위한 라이브러리
 import pandas as pd # 데이터프레임을 사용하기 위한 라이브러리
-​
+
 def crawler(search_key): # 크롤링 함수
     # 크롬드라이버 사용 지정
-    driver = webdriver.Chrome('./chromedriver')
-​
+    driver = webdriver.Chrome('./chromedriver')​
     # HTML 가져오기
     url = "https://www.foodsafetykorea.go.kr/portal/specialinfo/searchInfoProduct.do?menu_grp=MENU_NEW04&menu_no=2815#page1"
-​
+
     # 크롬드라이버로 url 열기
-    driver.get(url)
-​
+    driver.get(url)​
     # 검색어 입력    
     search_box = driver.find_element(By.XPATH, r'//*[@id="prd_nm"]').send_keys(search_key) # search_box에 search_key(검색어) 넣어줌
-​
+
     # 페이지 로딩 기다리기
     sleep(1)
 ​

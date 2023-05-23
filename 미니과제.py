@@ -64,3 +64,6 @@ with open('error.txt', 'w') as f:
 #    3. join을 사용해서 label, cx, cy, w, h 를 하나의 line(문자열)로 만든다.
 # 4. 변경된 line이든 변경되지 않은 line이든 리스트에 추가한다.
 # 5. 리스트 -> 문자열 -> 파일로 저장.
+
+
+

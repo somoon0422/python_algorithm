@@ -61,37 +61,49 @@ def reservation(court_num):
     # 오늘 날짜를 가져옵니다.
     # 예약 가능한 날짜 확인
     for i in range(2,7): # 2~6주차
-        for day in range(1,8): # 1~7일
-            xpath_month = '/html/body/div/div/div/div[2]/div[2]/div[1]/div[1]/div/div/div[2]/div/div/div[2]/div/div[2]/div/table/tbody/tr/td/div' #전체화면
-            xpath_week = driver.find_element(By.XPATH, '/html/body/div/div/div/div[2]/div[2]/div[1]/div[1]/div/div/div[2]/div/div/div[2]/div/div[2]/div/table/tbody/tr/td/div/div/div[{}]'.format(i))#1주일단위 
-            #날짜가 오늘날짜 이후일 경우 진행, 아닐 경우 pass
-            xpath_date ='/html/body/div/div/div/div[2]/div[2]/div[1]/div[1]/div/div/div[2]/div/div/div[2]/div/div[2]/div/table/tbody/tr/td/div/div/div[{}]/div[2]/table/thead/tr/td[{}]/span'.format(i,day)
-            today = datetime.today()
-            today_str = today.strftime("%Y-%m-%d")
-        
-        for day in range(1,8):
-            xpath_day1 = '/html/body/div/div/div/div[2]/div[2]/div[1]/div[1]/div/div/div[2]/div/div/div[2]/div/div[2]/div/table/tbody/tr/td/div/div/div[1]/div[3]/table/tbody/tr/td[{}]'.format(day)
-            xpath_day2 = '/html/body/div/div/div/div[2]/div[2]/div[1]/div[1]/div/div/div[2]/div/div/div[2]/div/div[2]/div/table/tbody/tr/td/div/div/div[1]/div[2]/table/tbody/tr/td[{}]/a/div[1]/span'.format(day)
-            check_box = '//*[@id="pushYn"]'
-            #action
-            #날짜를 하나씩 클릭
-            driver.find_element(By.XPATH, xpath_day1).click()
-            driver.find_element(By.XPATH, xpath_day2).click()
-            print("{}일을 조회합니다.".formaty(day))
-            time.sleep(1)
+        for day in range(2,7): # 1~7일
+            xpath_month = '/html/body/div/div/div/div[2]/div[2]/div[1]/div[1]/div/div/div[2]/div/div/div[2]/div/div[2]/div/table/tbody/tr/td/div' #달력전체화면
+            xpath_day = driver.find_element(By.XPATH, '/html/body/div/div/div/div[2]/div[2]/div[1]/div[1]/div/div/div[2]/div/div/div[2]/div/div[2]/div/table/tbody/tr/td/div/div/div[{}]/div[1]/table/tbody/tr/td[{}]'.format(i, day))#1일단위박스
+            time.sleep(2)
+            xpath_day.click()
+            # actions = ActionChains(driver)
+            # actions.move_to_element(xpath_day)
+            # actions.perform()
+            # driver.execute_script("arguments[0].click();", xpath_day)
             
+            print("클릭성공")
+            time.sleep(2)
+            #import pdb; pdb.set_trace()
             try:
-                target_xpath = '/html/body/div/div/div/div[2]/div[2]/table/tbody/tr[8]/td[1]/label'
-                if target_xpath in 'label':
-                    driver.find_element(By.XPATH, check_box).click()
-                    print("예약 가능한 날짜입니다.")
+                #체크 박스 클릭
+                check_box = driver.find_element(By.XPATH, '/html/body/div/div/div/div[2]/div[2]/table/tbody/tr[8]/td[1]/label/span')
+                check_box.click()
+                print("체크박스를 클릭했습니다.")
+                next_level = driver.find_element(By.XPATH, '/html/body/div/div/div/div[2]/div[2]/div[2]/button[2]')
+                next_level.click()
+                print("다음단계로 넘어갑니다.")
+                time.sleep(2)
+                break
             except:
-                print("예약 불가능한 날짜입니다.")
-                pass
-
-
-            path = /html/body/div/div/div/div[2]/div[2]/table/tbody/tr[10]/td[1]/label에 접근해봐서 성공하면 클릭하기. 실패하면 pass
-        
+                print("예약이 어렵습니다. 다음날을 확인합니다.")
+                continue
+        break
+    
+    agree_button = driver.find_element(By.XPATH, '/html/body/div/div/div/div[2]/div[2]/div/div[2]/div[4]/div[1]/label/span')
+    agree_button.click()
+    reserve_button = driver.find_element(By.XPATH, '/html/body/div/div/div/div[2]/div[2]/div/div[2]/div[4]/div[2]/button[2]')
+    reserve_button.click()
+    time.sleep(2)
+    done_button = driver.find_element(By.XPATH, '/html/body/div/div/div/div[2]/div[2]/div/div[2]/div/button')
+    done_button.click()
+    print("예약이 완료되었습니다.")
+    
+    driver.close()
+    
+    
+    
+                
+            
 
 
 if __name__ == '__main__':
@@ -99,3 +111,18 @@ if __name__ == '__main__':
     username = input("아이디를 입력하세요: ")
     password = input("비밀번호를 입력하세요: ")
     reservation(count_num)
+    
+    
+    
+            # 오늘날짜 이후 기준으로 찾고 싶을 때 
+            # date = '/html/body/div/div/div/div[2]/div[2]/div[1]/div[1]/div/div/div[2]/div/div/div[2]/div/div[2]/div/table/tbody/tr/td/div/div/div[{}]/div[2]/table/thead/tr/td[{}]'.format(i, day)
+            # date_text = date.get_property("data-date") if date else ""
+            # print(date_text)
+            # today = datetime.date.today() #datetime.date(2023, 5, 23)
+            # today_str = today.strftime("%Y-%m-%d") #오늘날짜
+            # choice_date = date_text #선택한날짜
+            # # date = xpath_day.find("span" , class_ = "fc-day-number").get_text()
+            
+            # if choice_date <= today_str: # 오늘날짜 이전일 경우
+            #     print("이전날짜입니다. 다음날짜로 넘어갑니다.")
+            #     continue
