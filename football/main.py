@@ -9,7 +9,8 @@ import time
 import requests
 import re
 import datetime
-
+import threading
+ 
 def reservation(court_num):
     # 크롬 드라이버 실행
     driver = webdriver.Chrome()
@@ -22,7 +23,6 @@ def reservation(court_num):
     xpath_username = '//*[@id="id"]' 
     xpath_password = '//*[@id="pwd"]'
     xpath_login = '/html/body/div/div/div/section/div/div[2]/div[1]/div[2]/button'
-    
     driver.find_element(By.XPATH, xpath_username).send_keys(username) # 아이디 입력
     driver.find_element(By.XPATH, xpath_password).send_keys(password) # 비밀번호 입력
     driver.find_element(By.XPATH, xpath_login).click() # 로그인 버튼 클릭
@@ -39,7 +39,6 @@ def reservation(court_num):
     
 
     # 대관예약 페이지로 이동
-    
     reserve_button = driver.find_element(By.XPATH, '/html/body/div/div/div/section/div/ul/li[3]')
     reserve_button.click()
     print("대관예약 페이지로 이동합니다.")
@@ -54,11 +53,10 @@ def reservation(court_num):
     
     next_month = "/html/body/div/div/div/div[2]/div[2]/div[1]/div[1]/div/div/div[2]/div/div/div[1]/a[2]"
     driver.find_element(By.XPATH, next_month).click()
+    time.sleep(1)
+    print("예약가능한 날짜를 확인합니다.")
     
-    
-    #여기서부터 잘 안됨.....
-    
-    # 오늘 날짜를 가져옵니다.
+
     # 예약 가능한 날짜 확인
     for i in range(2,7): # 2~6주차
         for day in range(2,7): # 1~7일
@@ -66,19 +64,24 @@ def reservation(court_num):
             xpath_day = driver.find_element(By.XPATH, '/html/body/div/div/div/div[2]/div[2]/div[1]/div[1]/div/div/div[2]/div/div/div[2]/div/div[2]/div/table/tbody/tr/td/div/div/div[{}]/div[1]/table/tbody/tr/td[{}]'.format(i, day))#1일단위박스
             time.sleep(2)
             xpath_day.click()
+            import pdb; pdb.set_trace()
             # actions = ActionChains(driver)
             # actions.move_to_element(xpath_day)
             # actions.perform()
             # driver.execute_script("arguments[0].click();", xpath_day)
-            
             print("클릭성공")
-            time.sleep(2)
+            def sleep():
+                threading.Event().wait(100)
+                t = threading.Thread(target=sleep)
+                t.start()
+                t.join()
             #import pdb; pdb.set_trace()
             try:
                 #체크 박스 클릭
-                check_box = driver.find_element(By.XPATH, '/html/body/div/div/div/div[2]/div[2]/table/tbody/tr[8]/td[1]/label/span')
+                check_box = driver.find_element(By.XPATH, '/html/body/div/div/div/div[2]/div[2]/table/tbody/tr[8]/td[1]/label/span') #이 부분 수정필요 [8] -> [10]
                 check_box.click()
                 print("체크박스를 클릭했습니다.")
+                import pdb; pdb.set_trace()
                 next_level = driver.find_element(By.XPATH, '/html/body/div/div/div/div[2]/div[2]/div[2]/button[2]')
                 next_level.click()
                 print("다음단계로 넘어갑니다.")
@@ -93,19 +96,12 @@ def reservation(court_num):
     agree_button.click()
     reserve_button = driver.find_element(By.XPATH, '/html/body/div/div/div/div[2]/div[2]/div/div[2]/div[4]/div[2]/button[2]')
     reserve_button.click()
-    time.sleep(2)
     done_button = driver.find_element(By.XPATH, '/html/body/div/div/div/div[2]/div[2]/div/div[2]/div/button')
     done_button.click()
     print("예약이 완료되었습니다.")
     
     driver.close()
     
-    
-    
-                
-            
-
-
 if __name__ == '__main__':
     count_num = int(input("예약하실 축구장 번호를 입력하세요: ")) # ex) 4  
     username = input("아이디를 입력하세요: ")
