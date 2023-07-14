@@ -65,5 +65,25 @@ with open('error.txt', 'w') as f:
 # 4. 변경된 line이든 변경되지 않은 line이든 리스트에 추가한다.
 # 5. 리스트 -> 문자열 -> 파일로 저장.
 
+change_list = []
+for file in file_list:
+    with open(file , 'r') as f:
+        lines = f.readlines()
+        for line in lines:
+            line = line.strip()
+            label, cx, cy, w, h = line.split()
+            if int(label) == 99:
+                label = 38
+                line = ' '.join([str(label),cx,cy,w,h])
+            change_list.append(line)
+        else:
+            change_list.append(line)
+            
+with open('change.txt', 'w') as f:
+    change_str = '\n'.join(change_list)
+    f.write(change_str)
+            
+                
+
 
 
