@@ -1,0 +1,18 @@
+print('김소희')
+print('귀도 반 로섬')
+print('무한한 정수처리, 간단한 문법구조, 다양한 모듈')
+print('good!'*5)
+print(1+1)
+print(1-1)
+print(1*1)
+
+print(7*1)
+print(7*2)
+print(7*3)
+
+print('가로 10, 세로25 삼각형넓이', 10*25/2,'이다.')
+print('김소희')
+print('데이터매니저')
+print('28살')
+print('여자')
+print('운동')
